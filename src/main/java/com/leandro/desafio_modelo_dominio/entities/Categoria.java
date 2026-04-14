@@ -1,27 +1,35 @@
 package com.leandro.desafio_modelo_dominio.entities;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_categoria")
-public class Caregoria {
+public class Categoria implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String descricao;
 	
-	public Caregoria() {
+	@OneToMany(mappedBy = "categoria")
+	private List<Atividade> atividades = new ArrayList<>();
+	
+	public Categoria() {
 		
 	}
 	
-	public Caregoria(Integer id, String descricao) {
+	public Categoria(Integer id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
 	}
@@ -41,6 +49,10 @@ public class Caregoria {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	public List<Atividade> getAtividades() {
+		return atividades;
+	}
 
 	@Override
 	public int hashCode() {
@@ -55,7 +67,7 @@ public class Caregoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Caregoria other = (Caregoria) obj;
+		Categoria other = (Categoria) obj;
 		return Objects.equals(id, other.id);
 	}
 

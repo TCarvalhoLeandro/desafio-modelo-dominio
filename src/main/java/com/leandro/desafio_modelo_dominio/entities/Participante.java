@@ -1,22 +1,30 @@
 package com.leandro.desafio_modelo_dominio.entities;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_participante")
-public class Participante {
+public class Participante implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String email;
+	
+	@ManyToMany(mappedBy = "participantes")
+	private Set<Atividade> atividades = new HashSet<>();
 	
 	public Participante() {
 		
@@ -52,6 +60,10 @@ public class Participante {
 		this.email = email;
 	}
 	
+	public Set<Atividade> getAtividades() {
+		return atividades;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

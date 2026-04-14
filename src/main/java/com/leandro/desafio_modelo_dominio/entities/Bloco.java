@@ -1,19 +1,24 @@
 package com.leandro.desafio_modelo_dominio.entities;
 
+import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_bloco")
-public class Bloco {
+public class Bloco implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -24,12 +29,14 @@ public class Bloco {
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant fim;
 	
+	@ManyToMany(mappedBy = "blocos")
+	private Set<Atividade> atividades = new HashSet<>();
+	
 	public Bloco() {
 		
 	}
 	
 	public Bloco(Integer id, Instant inicio, Instant fim) {
-		super();
 		this.id = id;
 		this.inicio = inicio;
 		this.fim = fim;
@@ -59,6 +66,10 @@ public class Bloco {
 		this.fim = fim;
 	}
 	
+	public Set<Atividade> getAtividades() {
+		return atividades;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

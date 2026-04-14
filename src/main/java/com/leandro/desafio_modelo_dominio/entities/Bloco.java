@@ -23,10 +23,10 @@ public class Bloco implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	@Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
 	private Instant inicio;
 	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	@Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
 	private Instant fim;
 	
 	@ManyToMany(mappedBy = "blocos")
